@@ -2,12 +2,13 @@ package view;
 
 import javafx.application.Application;
 import javafx.geometry.Insets;
+import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Separator;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -27,15 +28,19 @@ public class ShowContacts extends Application{
             VBox box = new VBox();
             box.setSpacing(20);
 
-            ArrayList<Contact> contacts = Contact.getDefaultContacts();
+            ArrayList<Contact> contacts = AllContacts.getDefaultContacts();
 
             for (Contact c : contacts) {
                 GridPane kontaktePane = kontaktAnzeigen(c);
                 box.getChildren().add(kontaktePane);
+                Separator separator = new Separator();
+                separator.setValignment(VPos.CENTER);
+                box.getChildren().add(separator);
             }
 
             root.setContent(box);
-            Scene scene = new Scene(root, 400, 400);
+
+            Scene scene = new Scene(root, 380, 1000);
             primaryStage.setScene(scene);
             primaryStage.show();
         } catch (Exception e) {
@@ -46,16 +51,11 @@ public class ShowContacts extends Application{
 
     private GridPane kontaktAnzeigen(Contact contact) {
         GridPane root = new GridPane();
+        root.setGridLinesVisible(false);
         // horizontal gap and vertical gap between columns and lines
         root.setHgap(10);
         root.setVgap(10);
-        //limit the width of columns
-        //gives a limit to column 0
-        root.getColumnConstraints().add(new ColumnConstraints(100));
-        //gives a limit to column 1
-        root.getColumnConstraints().add(new ColumnConstraints(140));
-        // an Insets defines the space around a region
-        // here space will be added around the grid
+
         root.setPadding(new Insets(25, 25, 25, 25));
 
         Label kontaktdaten = new Label(contact.getVname() + " " + contact.getNname() + "\n"
@@ -65,14 +65,26 @@ public class ShowContacts extends Application{
 
         root.add(kontaktdaten, 0, 0);
 
-        Image image = new Image(getClass().
-                getResource("/resources/" + contact.getFoto()).toString());
+        if (contact.getFoto() != null) {
+            Image image = new Image(getClass().
+                    getResource("/resources/" + contact.getFoto()).toString());
 
-        ImageView imageview = new ImageView(image);
-        root.add(imageview, 1, 0);
+            ImageView imageview = new ImageView(image);
+            imageview.setFitHeight(150);
+            imageview.setFitWidth(150);
+            root.add(imageview, 1, 0);
+        } else{
+            Image image = new Image("/resources/nopicture.png");
+
+            ImageView imageview = new ImageView(image);
+            imageview.setFitHeight(150);
+            imageview.setFitWidth(150);
+            root.add(imageview, 1, 0);
+        }
 
         Label labelemail = new Label("-- E-Mail-Adresse(n) --");
         root.add(labelemail, 0, 1);
+
         root.add(emailsAnzeigen(contact),0,2,2,1);
 
 
@@ -85,15 +97,17 @@ public class ShowContacts extends Application{
         root.setHgap(5);
         root.setVgap(5);
         root.setPadding(new Insets(8, 8, 8, 8));
+
         int row = 0;
-        // the rows of root are dynamically allocated
         ArrayList<MailAdress> adresses = contact.getAdresses();
 
-
-        for (MailAdress m : adresses){
-            root.add(new Label(m.toString()),1,row);
-            row++;
-        }
+        if (contact.getAdresses().size() != 0) {
+            for (MailAdress m : adresses) {
+                root.add(new Label(m.toString()), 1, row);
+                row++;
+            }
+        } else
+            root.add(new Label("keine Mail-Adresse hinterlegt"), 1, 1);
 
         ScrollPane pane = new ScrollPane();
         pane.setContent(root);

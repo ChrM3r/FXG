@@ -98,27 +98,6 @@ public class Contact {
         this.foto = foto;
     }
 
-    static public ArrayList<Contact> getDefaultContacts(){
 
-        ArrayList<MailAdress> merscherAdresses = new ArrayList<>();
-        merscherAdresses.add(new MailAdress("chris.merscher@beuth-hochschule.de"));
-        merscherAdresses.add(new MailAdress("chris.merscher@web.de"));
-
-        ArrayList<MailAdress> mustermannAdresses = new ArrayList<>();
-        merscherAdresses.add(new MailAdress("max.mustermann@beuth-hochschule.de"));
-        merscherAdresses.add(new MailAdress("max.mustermann@web.de"));
-
-        ArrayList<MailAdress> testAdresses = new ArrayList<>();
-        merscherAdresses.add(new MailAdress("test.test@beuth-hochschule.de"));
-        merscherAdresses.add(new MailAdress("test.test@web.de"));
-
-        ArrayList<Contact> defaultContacts = new ArrayList<>();
-        defaultContacts.add(new Contact("Chris", "Merscher", "Teststraße 10", "02347", "Teststadt", "01560286537", merscherAdresses, "merscher.jpg"));
-        defaultContacts.add(new Contact("Max", "Mustermann", "Musterstraße 10", "12345", "Musterstadt", "01230987654", mustermannAdresses, "mustermann.jpg"));
-        defaultContacts.add(new Contact("Test", "Testname", "Testerweg 34", "90765", "Testdorf", "09537219343", testAdresses, "testname.jpg"));
-
-
-        return defaultContacts;
-    }
 }
 
