@@ -7,7 +7,7 @@ public class MailAdress {
 
 
     public MailAdress(String adresse) {
-        this.adresse = (adresse.contains("@") && adresse.charAt(0) != '@' && adresse.charAt(adresse.length() - 1) != '@') ? adresse : null;
+        this.adresse = (adresse.contains("@") && adresse.charAt(0) != '@' && adresse.charAt(adresse.length() - 1) != '@' && adresse.length() >= 3) ? adresse : null;
     }
 
     public String getAdresse() {
