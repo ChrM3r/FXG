@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
-public class ShowContacts extends Application{
+public class ShowContacts extends Application {
 
     @Override
     public void start(Stage primaryStage) {
@@ -65,50 +65,46 @@ public class ShowContacts extends Application{
     //Für's Karma
     static private void kontakteEinlesenCSV() throws IOException {
 
-        final List<String> csvZeilen;
-        String[] einzelWerte;
-        MailAdress mailAdress;
+        try (Scanner inputStream = new Scanner(new File("/Volumes/Daten/Dokumente/Studium/2. Semester/Grundlagen der Programmierung II/FXG/src/resources/defaultcontacts.csv"))) {
 
-        File kontakteCSV = new File("/Volumes/Daten/Dokumente/Studium/2. Semester/Grundlagen der Programmierung II/FXG/src/resources/defaultcontacts.csv");
+            while (inputStream.hasNext()) {
 
-        Scanner inputStream = new Scanner(kontakteCSV);
-        while (inputStream.hasNext()){
+                ArrayList<MailAdress> adresses = new ArrayList<>();
+                MailAdress mailAdress;
+                AllMailAdresses neueMailAdresses;
+                String csvZeile = inputStream.next();
+                String[] einzelWerte = csvZeile.split(",");
 
-            ArrayList<MailAdress> adresses = new ArrayList<>();
-            AllMailAdresses neueMailAdresses;
-            String csvZeile = inputStream.next();
-            einzelWerte = csvZeile.split(",");
-
-            if (einzelWerte.length >= 8){
-                mailAdress = new MailAdress(einzelWerte[7]);
-                if (mailAdress.getAdresse() != null)
+                if (einzelWerte.length >= 8) {
+                    mailAdress = new MailAdress(einzelWerte[7]);
+                    if (mailAdress.getAdresse() != null)
                         adresses.add(mailAdress);
-            }
-            if (einzelWerte.length >= 9){
-                mailAdress = new MailAdress(einzelWerte[8]);
-                if (mailAdress.getAdresse() != null)
-                    adresses.add(mailAdress);
-            }
-            if (einzelWerte.length >= 10){
-                mailAdress = new MailAdress(einzelWerte[9]);
-                if (mailAdress.getAdresse() != null)
-                    adresses.add(mailAdress);
-            }
+                }
+                if (einzelWerte.length >= 9) {
+                    mailAdress = new MailAdress(einzelWerte[8]);
+                    if (mailAdress.getAdresse() != null)
+                        adresses.add(mailAdress);
+                }
+                if (einzelWerte.length >= 10) {
+                    mailAdress = new MailAdress(einzelWerte[9]);
+                    if (mailAdress.getAdresse() != null)
+                        adresses.add(mailAdress);
+                }
 
-            Contact neuerKontakt;
-            if (einzelWerte.length < 11) {
-                neueMailAdresses = new AllMailAdresses(adresses);
-                neuerKontakt = new Contact(einzelWerte[0], einzelWerte[1], einzelWerte[2], einzelWerte[3], einzelWerte[4], einzelWerte[5], einzelWerte[6], neueMailAdresses);
-            } else {
-                neueMailAdresses = new AllMailAdresses(adresses);
-                neuerKontakt = new Contact(einzelWerte[0], einzelWerte[1], einzelWerte[2], einzelWerte[3], einzelWerte[4], einzelWerte[5], einzelWerte[6], neueMailAdresses, einzelWerte[10]);
+                Contact neuerKontakt;
+                if (einzelWerte.length < 11) {
+                    neueMailAdresses = new AllMailAdresses(adresses);
+                    neuerKontakt = new Contact(einzelWerte[0], einzelWerte[1], einzelWerte[2], einzelWerte[3], einzelWerte[4], einzelWerte[5], einzelWerte[6], neueMailAdresses);
+                } else {
+                    neueMailAdresses = new AllMailAdresses(adresses);
+                    neuerKontakt = new Contact(einzelWerte[0], einzelWerte[1], einzelWerte[2], einzelWerte[3], einzelWerte[4], einzelWerte[5], einzelWerte[6], neueMailAdresses, einzelWerte[10]);
+                }
+
+                AllContacts.addContact(neuerKontakt);
             }
-
-            AllContacts.addContact(neuerKontakt);
-
         }
-        inputStream.close();
     }
+
     private GridPane kontaktAnzeigen(Contact contact) {
 
         GridPane root = new GridPane();
@@ -120,7 +116,7 @@ public class ShowContacts extends Application{
         root.setPadding(new Insets(25, 25, 25, 25));
 
         Label kontaktdaten = new Label(contact.getVname() + " " + contact.getNname() + "\n"
-                + contact.getStrasse() + " " + contact.getHausnummer() +"\n"
+                + contact.getStrasse() + " " + contact.getHausnummer() + "\n"
                 + contact.getPlz() + " " + contact.getOrt() + "\n"
                 + contact.getNummer());
 
@@ -148,13 +144,13 @@ public class ShowContacts extends Application{
         Label labelemail = new Label("-- E-Mail-Adresse(n) --");
         root.add(labelemail, 0, 1);
 
-        root.add(emailsAnzeigen(contact),0,2,2,1);
+        root.add(emailsAnzeigen(contact), 0, 2, 2, 1);
 
 
         return root;
     }
 
-    private ScrollPane emailsAnzeigen(Contact contact){
+    private ScrollPane emailsAnzeigen(Contact contact) {
 
         GridPane root = new GridPane();
         root.setHgap(5);
