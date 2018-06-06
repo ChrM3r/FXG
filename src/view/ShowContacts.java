@@ -34,10 +34,11 @@ public class ShowContacts extends Application {
             VBox box = new VBox();
             box.setSpacing(20);
 
-
+            //Beim CSV Import muss ich die Anzahl der E-Mail-Adressen auf 3 begrenzen
             ContactCSVImport.kontakteEinlesen();
             ArrayList<Contact> contacts = AllContacts.allContacts;
 
+            //Default-Liste "hart" im Code
             //ArrayList<Contact> contacts = AllContacts.getDefaultContacts();
 
             for (Contact c : contacts) {
