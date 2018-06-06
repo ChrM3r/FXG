@@ -107,6 +107,7 @@ public class ShowContacts extends Application{
             AllContacts.addContact(neuerKontakt);
 
         }
+        inputStream.close();
     }
     private GridPane kontaktAnzeigen(Contact contact) {
 
@@ -133,7 +134,7 @@ public class ShowContacts extends Application{
             imageview.setFitHeight(150);
             imageview.setFitWidth(150);
             root.add(imageview, 1, 0);
-        } else{
+        } else {
 
             Image image = new Image(getClass().
                     getResource("/resources/" + contact.getFoto()).toString());
