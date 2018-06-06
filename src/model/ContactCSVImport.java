@@ -18,7 +18,7 @@ public class ContactCSVImport {
                 MailAdress mailAdress;
                 AllMailAdresses neueMailAdresses;
                 String csvZeile = inputStream.next();
-                String[] einzelWerte = csvZeile.split(",");
+                String[] einzelWerte = csvZeile.split(";");
 
                 if (einzelWerte.length >= 8) {
                     mailAdress = new MailAdress(einzelWerte[7]);
