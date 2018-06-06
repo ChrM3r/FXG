@@ -6,17 +6,19 @@ public class Contact {
     private String vname;
     private String nname;
     private String strasse;
+    private String hausnummer;
     private String plz;
     private String ort;
     private String nummer;
-    private ArrayList<MailAdress> adresses;
+    private AllMailAdresses adresses;
     private String foto;
 
     //Konstruktor mit Foto
-    public Contact(String vname, String nname, String strasse, String plz, String ort, String nummer, ArrayList<MailAdress> adresses, String foto) {
+    public Contact(String vname, String nname, String strasse, String hausnummer, String plz, String ort, String nummer, AllMailAdresses adresses, String foto) {
         this.vname = vname;
         this.nname = nname;
         this.strasse = strasse;
+        this.hausnummer = hausnummer;
         this.plz = plz;
         this.ort = ort;
         this.nummer = nummer;
@@ -24,10 +26,11 @@ public class Contact {
         this.foto = foto;
     }
     //Konstruktor ohne Foto
-    public Contact(String vname, String nname, String strasse, String plz, String ort, String nummer, ArrayList<MailAdress> adresses) {
+    public Contact(String vname, String nname, String strasse, String hausnummer, String plz, String ort, String nummer, AllMailAdresses adresses) {
         this.vname = vname;
         this.nname = nname;
         this.strasse = strasse;
+        this.hausnummer = hausnummer;
         this.plz = plz;
         this.ort = ort;
         this.nummer = nummer;
@@ -58,6 +61,16 @@ public class Contact {
         this.strasse = strasse;
     }
 
+
+    public String getHausnummer() {
+        return hausnummer;
+    }
+
+    public void setHausnummer(String hausnummer) {
+        this.hausnummer = hausnummer;
+    }
+
+
     public String getPlz() {
         return plz;
     }
@@ -82,11 +95,11 @@ public class Contact {
         this.nummer = nummer;
     }
 
-    public ArrayList<MailAdress> getAdresses() {
+    public AllMailAdresses getAdresses() {
         return adresses;
     }
 
-    public void setAdresses(ArrayList<MailAdress> adresses) {
+    public void setAdresses(AllMailAdresses adresses) {
         this.adresses = adresses;
     }
 
